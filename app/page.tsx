@@ -1,3 +1,5 @@
+'use client';
+import { Counter } from './components/Counter';
 import { Search } from './components/Search';
 
 export default function Home() {
@@ -17,6 +19,7 @@ export default function Home() {
           <li>TailwindCSS</li>
         </ul>
       </div>
+      <Counter />
     </main>
   );
 }

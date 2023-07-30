@@ -1,13 +1,13 @@
 'use client';
-import React, { useState } from 'react';
+import React from 'react';
 
-interface InputProperties {
+interface InputProps {
   placeholder: string;
   value: string;
   setValue(value: string): void;
 }
 
-export const Input: React.FC<InputProperties> = ({
+export const Input: React.FC<InputProps> = ({
   placeholder,
   value,
   setValue,

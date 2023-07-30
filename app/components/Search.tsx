@@ -13,13 +13,21 @@ interface Data {
 export const Search = () => {
   const [searchValue, setSearchValue] = useState('');
   const [data, setData] = useState<Data[]>([]);
+  const [url, setUrl] = useState('');
+  const [title, setTitle] = useState('');
 
   async function fetchSearch() {
     const response = await axios.get(
       `https://api.consumet.org/anime/gogoanime/${searchValue}`
     );
-    console.log(response.data);
     setData(response.data.results);
+  }
+
+  async function watchUrl(name: string) {
+    const response = await axios.get(
+      `https://api.consumet.org/anime/gogoanime/watch/${name}-episode-1`
+    );
+    setUrl(response.data.headers.Referer);
   }
 
   useEffect(() => {
@@ -35,15 +43,26 @@ export const Search = () => {
             value={searchValue}
             setValue={setSearchValue}
           />
-          <Button />
+          <Button text="Clear" />
         </form>
       </div>
+      {url && (
+        <a
+          href={url}
+          target="_blank"
+          className="flex self-center border border-rose-600 w-fit m-8 p-4"
+          onClick={() => setUrl('')}
+        >
+          Watch here {title}
+        </a>
+      )}
+
       <div>
         {data &&
           data.map((item) => {
             return (
               <div
-                key={item.id + '1'}
+                key={item.id}
                 className="flex gap-8 items-center justify-center"
               >
                 <Image
@@ -51,9 +70,19 @@ export const Search = () => {
                   height={150}
                   src={item.image}
                   alt={item.title}
-                  key={item.id + ' img'}
                 />
-                <div key={item.id}>{item.title}</div>
+                <div>{item.title}</div>
+                <div>id : {item.id}</div>
+                <Button
+                  text="watch"
+                  onclick={() => {
+                    console.log(item.id);
+                    watchUrl(item.id);
+                    document.body.scrollTop = 0; // For Safari
+                    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+                    setTitle(item.title);
+                  }}
+                />
               </div>
             );
           })}

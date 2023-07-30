@@ -1,5 +1,14 @@
 import React from 'react';
 
-export const Button = () => {
-  return <button className="border border-rose-700">Clear</button>;
+interface ButtonProps {
+  text: string;
+  onclick?(): void;
+}
+
+export const Button: React.FC<ButtonProps> = ({ text, onclick }) => {
+  return (
+    <button className="border border-rose-700" onClick={onclick}>
+      {text}
+    </button>
+  );
 };

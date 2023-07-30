@@ -4,7 +4,7 @@ import { Search } from './components/Search';
 
 export default function Home() {
   return (
-    <main className="flex flex-col h-screen justify-between bg-slate-200">
+    <main className="flex flex-col min-h-screen justify-between bg-slate-200">
       <h1 className="text-2xl text-rose-700 flex justify-center">
         Anime Abyss - Watch anime online for free
       </h1>

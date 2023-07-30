@@ -3,6 +3,7 @@ import { Input } from './Input';
 import { Button } from './Button';
 import axios from 'axios';
 import Image from 'next/image';
+import Link from 'next/link';
 
 interface Data {
   id: string;
@@ -83,6 +84,13 @@ export const Search = () => {
                     setTitle(item.title);
                   }}
                 />
+                <Button
+                  text="Open anime page"
+                  onclick={() => {
+                    console.log('click');
+                  }}
+                />
+                <Link href={`/${item.id}`}>Open</Link>
               </div>
             );
           })}

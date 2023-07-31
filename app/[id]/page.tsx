@@ -10,6 +10,7 @@ interface Episode {
   id: string;
   number: number;
   url: string;
+  active: boolean;
 }
 
 interface Data {
@@ -29,14 +30,17 @@ interface Data {
 }
 
 export default function AnimeInfo({ params }: { params: { id: string } }) {
+  const [active, setActive] = useState(false);
   const [data, setData] = useState<Data>();
   const [url, setUrl] = useState('');
   async function fetchInfo() {
     const response = await axios.get(
       `https://api.consumet.org/anime/gogoanime/info/${params.id}`
     );
+    response.data.episodes = response.data.episodes.map((episode: Episode) => {
+      return (episode = { ...episode, active: false });
+    });
     setData(response.data);
-    console.log(response);
   }
 
   async function watchUrl(episode: string) {
@@ -46,9 +50,19 @@ export default function AnimeInfo({ params }: { params: { id: string } }) {
     setUrl(response.data.headers.Referer);
   }
 
+  function clearActivity() {
+    if (data) {
+      data.episodes.forEach((episode) => {
+        episode.active = false;
+        console.log(episode);
+      });
+    }
+  }
+
   useEffect(() => {
     fetchInfo();
   }, []);
+
   if (data) {
     return (
       <>
@@ -57,35 +71,38 @@ export default function AnimeInfo({ params }: { params: { id: string } }) {
         <h3>Description</h3>
         <p>{data.description}</p>
         <h3>Episodes</h3>
-        <div>
+        <div className="flex">
           {data.episodes.map((episode) => {
             return (
-              <>
-                <div> id: {episode.id}</div>
-                <div>{episode.number}</div>
-                <div>{episode.url}</div>
+              <div key={episode.id} className="flex">
                 <button
-                  onClick={() =>
+                  onClick={() => {
                     watchUrl(
                       episode.url.replace('https://gogoanimehd.to//', '')
-                    )
+                    );
+                    clearActivity();
+                    episode.active = !episode.active;
+                  }}
+                  className={
+                    episode.active
+                      ? 'p-2 border border-rose-500 bg-rose-500'
+                      : 'p-2 border border-rose-500'
                   }
                 >
-                  Watch
+                  {episode.number}
                 </button>
-                <a href={url} target="_blank">
-                  Open and watch
-                </a>
-                <iframe
-                  width="480"
-                  height="315"
-                  src={url}
-                  allowFullScreen={true}
-                ></iframe>
-              </>
+              </div>
             );
           })}
         </div>
+        {url && (
+          <iframe
+            width="480"
+            height="315"
+            src={url}
+            allowFullScreen={true}
+          ></iframe>
+        )}
       </>
     );
   } else {

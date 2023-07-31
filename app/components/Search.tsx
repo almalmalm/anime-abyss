@@ -4,8 +4,9 @@ import { Button } from './Button';
 import axios from 'axios';
 import Image from 'next/image';
 import Link from 'next/link';
+import { Card } from './Card';
 
-interface Data {
+export interface AnimeData {
   id: string;
   title: string;
   image: string;
@@ -13,7 +14,7 @@ interface Data {
 
 export const Search = () => {
   const [searchValue, setSearchValue] = useState('');
-  const [data, setData] = useState<Data[]>([]);
+  const [data, setData] = useState<AnimeData[]>([]);
   const [url, setUrl] = useState('');
   const [title, setTitle] = useState('');
 
@@ -58,41 +59,10 @@ export const Search = () => {
         </a>
       )}
 
-      <div>
+      <div className="flex flex-wrap gap-8 mx-16">
         {data &&
           data.map((item) => {
-            return (
-              <div
-                key={item.id}
-                className="flex gap-8 items-center justify-center"
-              >
-                <Image
-                  width={150}
-                  height={150}
-                  src={item.image}
-                  alt={item.title}
-                />
-                <div>{item.title}</div>
-                <div>id : {item.id}</div>
-                <Button
-                  text="watch"
-                  onclick={() => {
-                    console.log(item.id);
-                    watchUrl(item.id);
-                    document.body.scrollTop = 0; // For Safari
-                    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
-                    setTitle(item.title);
-                  }}
-                />
-                <Button
-                  text="Open anime page"
-                  onclick={() => {
-                    console.log('click');
-                  }}
-                />
-                <Link href={`/${item.id}`}>Open</Link>
-              </div>
-            );
+            return <Card key={item.id} {...item} />;
           })}
       </div>
     </>

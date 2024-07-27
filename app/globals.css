@@ -3,43 +3,74 @@
 @tailwind utilities;
 
 :root {
-  --white: #ffffff;
+    --white: #ffffff;
+    --raspberry: #d1105a;
+    --whiteopacity80: #ffffff80;
 }
 
 /* Hide input arrows  */
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 /* Firefox */
 input[type='number'] {
-  -moz-appearance: textfield;
+    -moz-appearance: textfield;
 }
 
 .background {
-  background: url("./background.png");
-  height: 100vh;
-  padding: 2rem 4rem;
+    background: url('./background.png');
+    height: 100vh;
+    padding: 2rem 4rem;
 }
 
 .logo {
-  font-weight: 700;
-  font-size: 3rem;
-  color: var(--white);
+    font-weight: 700;
+    font-size: 3rem;
+    color: var(--white);
 }
 
 .header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.box{
-  background: var(--white);
-  border-radius: 0.5rem;
-  padding: 0.5rem;
-  cursor: pointer;
+.box {
+    background: var(--white);
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    padding-bottom: 0.1rem;
+    cursor: pointer;
+}
+
+.menu {
+    display: flex;
+    gap: 2rem;
+}
+
+.slider {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+
+.card {
+    width: 16rem;
+    height: 16rem;
+    border-radius: 1.5rem;
+    background: var(--white);
+    display: flex;
+    align-items: end;
+    justify-content: center;
+}
+
+.card-title {
+    border-radius: 0.5rem;
+    background: var(--whiteopacity80);
+    padding: 1rem;
+    margin-bottom: 1rem;
 }
